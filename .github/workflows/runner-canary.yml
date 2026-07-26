@@ -1,0 +1,21 @@
+name: runner-canary
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_label:
+        description: Exact one-use runner label
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  runner-canary:
+    runs-on: ${{ inputs.runner_label }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Measure JIT custody
+        shell: bash
+        run: /bin/sh .github/wcp-runner-canary-scan.sh
