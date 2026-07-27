@@ -37,4 +37,16 @@ for custody_root in /runner/_diag /runner/_work /tmp; do
   fi
 done
 
+for state_path in \
+  /runner/.runner \
+  /runner/.credentials \
+  /runner/.credentials_rsaparams \
+  /wcp-jit-state/.runner \
+  /wcp-jit-state/.credentials \
+  /wcp-jit-state/.credentials_rsaparams; do
+  if /bin/cat "${state_path}" >/dev/null 2>&1; then
+    exit 75
+  fi
+done
+
 printf '%s\n' '{"argv_contains_jit":false,"diagnostics_contains_jit":false,"job_environment_contains_jit":false,"output_contains_jit":false,"process_environment_contains_jit":false,"work_contains_jit":false}'
